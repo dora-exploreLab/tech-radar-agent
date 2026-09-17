@@ -6,3 +6,7 @@ data/*.db
 .DS_Store
 *.pyc
 __pycache__/
+
+# 本地专用运维与桥接脚本 (保持本地工作，远程不公开)
+run_daily_digest.py
+install_wsl_service.sh
