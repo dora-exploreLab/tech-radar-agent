@@ -1,4 +1,4 @@
-﻿name: CI
+name: CI
 
 on:
   push:
@@ -32,6 +32,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Static Type Check
+        run: pnpm typecheck
 
       - name: Build TypeScript bundle
         run: pnpm build

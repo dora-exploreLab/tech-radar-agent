@@ -18,6 +18,7 @@
   "scripts": {
     "dev": "tsx src/cli.ts",
     "build": "tsup",
+    "typecheck": "tsc --noEmit",
     "start": "node dist/cli.js",
     "start:daily": "tsx src/cli.ts run",
     "test": "tsx scratch/test_agent_harness.ts"

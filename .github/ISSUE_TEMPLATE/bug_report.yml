@@ -1,0 +1,53 @@
+﻿name: 🐛 Bug Report
+description: Report an issue or unexpected behavior in TechRadar-Agent
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report an issue! Please provide as much detail as possible to help us reproduce and resolve it.
+  - type: input
+    id: environment
+    attributes:
+      label: Environment Info
+      description: OS version, Node.js version, and execution environment (e.g. Windows 11, WSL2 Ubuntu, Docker).
+      placeholder: "e.g., Windows 11 / WSL2, Node.js v22.14.0, pnpm v10.33.4"
+    validations:
+      required: true
+  - type: dropdown
+    id: storage-driver
+    attributes:
+      label: Storage Driver
+      description: Which storage driver were you using when the issue occurred?
+      options:
+        - postgres
+        - sqlite
+        - memory
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened? Include error logs or stack traces.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce the problem?
+      value: |
+        1. Run `...`
+        2. Set config `...`
+        3. See error `...`
+    validations:
+      required: true
