@@ -4,6 +4,8 @@
 > 面向高信噪比极客的自主技术雷达智能体与知识沉淀脚手架。具备感知、深度思考、统一动作派发与自省自愈能力，支持全域配置彻底解耦、多数仓驱动切换与 Obsidian 自动化归档。
 
 [![GitHub Repo](https://img.shields.io/badge/GitHub-dora--exploreLab%2Ftech--radar--agent-blue?logo=github)](https://github.com/dora-exploreLab/tech-radar-agent)
+[![CI](https://github.com/dora-exploreLab/tech-radar-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/dora-exploreLab/tech-radar-agent/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/dora-exploreLab/tech-radar-agent?color=brightgreen)](https://github.com/dora-exploreLab/tech-radar-agent/releases)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg?logo=typescript)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-22%2B-green.svg?logo=nodedotjs)](https://nodejs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
