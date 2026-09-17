@@ -1,0 +1,58 @@
+{
+  "name": "tech-radar-agent",
+  "version": "1.0.0",
+  "description": "Autonomous Tech Radar & Knowledge Distillation Agent Harness with Pluggable Storage and Decoupled Typography",
+  "type": "module",
+  "main": "dist/cli.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dora-exploreLab/tech-radar-agent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dora-exploreLab/tech-radar-agent/issues"
+  },
+  "homepage": "https://github.com/dora-exploreLab/tech-radar-agent#readme",
+  "bin": {
+    "radar": "dist/cli.js"
+  },
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "build": "tsup",
+    "start": "node dist/cli.js",
+    "start:daily": "tsx src/cli.ts run",
+    "test": "tsx scratch/test_agent_harness.ts"
+  },
+  "keywords": [
+    "ai-agent",
+    "harness",
+    "tech-radar",
+    "crawler",
+    "obsidian",
+    "knowledge-base",
+    "typescript"
+  ],
+  "author": "dorabighead",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.20.0",
+    "chalk": "^6.0.0",
+    "cheerio": "^1.2.0",
+    "commander": "^15.0.0",
+    "consola": "^3.4.2",
+    "dayjs": "^1.11.23",
+    "dotenv": "^17.4.2",
+    "fast-xml-parser": "^5.11.1",
+    "hpagent": "^1.2.0",
+    "ora": "^9.4.1",
+    "pg": "^8.23.0",
+    "socks-proxy-agent": "^10.1.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.3",
+    "@types/pg": "^8.23.1",
+    "tsup": "^8.5.1",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
+  }
+}
