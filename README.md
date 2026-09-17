@@ -25,6 +25,10 @@
 [![Co-developed with AGY](https://img.shields.io/badge/Co--developed%20with-AGY%20Agent-8A2BE2?logo=robotframework&logoColor=white)](https://github.com/dora-exploreLab)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
+<br/>
+
+![TechRadar Agent Hero](assets/hero-preview.png)
+
 </div>
 
 ---

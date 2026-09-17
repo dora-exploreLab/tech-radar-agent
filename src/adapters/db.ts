@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import pg from "pg";
 import { consola } from "consola";
 import type { IDedupStore } from "../core/types.js";
@@ -270,11 +272,135 @@ export class MemoryDedupStore implements IDedupStore {
 }
 
 // ==============================================================================
-// 3. 存储驱动工厂函数
+// 3. 本地轻量持久化存储驱动 (FileDedupStore / 0 外部依赖开箱即跑)
+// ==============================================================================
+export class FileDedupStore implements IDedupStore {
+  private filePath: string;
+  private seenArticles = new Set<string>();
+  private seenPapers = new Map<string, number>();
+  private seenRepos = new Set<string>();
+  private dailyRuns = new Set<string>();
+
+  constructor(filePath: string = "./data/radar_store.json") {
+    this.filePath = filePath.endsWith(".db")
+      ? filePath.replace(/\.db$/, ".json")
+      : filePath;
+  }
+
+  async connect(): Promise<void> {
+    try {
+      const dir = path.dirname(this.filePath);
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+      if (fs.existsSync(this.filePath)) {
+        const raw = fs.readFileSync(this.filePath, "utf-8");
+        const data = JSON.parse(raw);
+        if (Array.isArray(data.seenArticles)) {
+          this.seenArticles = new Set(data.seenArticles);
+        }
+        if (data.seenPapers && typeof data.seenPapers === "object") {
+          this.seenPapers = new Map(Object.entries(data.seenPapers));
+        }
+        if (Array.isArray(data.seenRepos)) {
+          this.seenRepos = new Set(data.seenRepos);
+        }
+        if (Array.isArray(data.dailyRuns)) {
+          this.dailyRuns = new Set(data.dailyRuns);
+        }
+      }
+    } catch (err) {
+      consola.warn("⚠️ 本地存储驱动读取异常，将以纯净状态初始化:", err);
+    }
+  }
+
+  async disconnect(): Promise<void> {
+    this.persist();
+  }
+
+  private persist(): void {
+    try {
+      const dir = path.dirname(this.filePath);
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+      const data = {
+        seenArticles: Array.from(this.seenArticles),
+        seenPapers: Object.fromEntries(this.seenPapers.entries()),
+        seenRepos: Array.from(this.seenRepos),
+        dailyRuns: Array.from(this.dailyRuns),
+        updatedAt: new Date().toISOString(),
+      };
+      fs.writeFileSync(this.filePath, JSON.stringify(data, null, 2), "utf-8");
+    } catch (err) {
+      consola.error("⚠️ 本地存储持久化失败:", err);
+    }
+  }
+
+  async filterNewItems<T>(
+    sourceType: string,
+    items: T[],
+    keySelector: (item: T) => string
+  ): Promise<T[]> {
+    if (sourceType === "tech_news") {
+      return items.filter((i) => !this.seenArticles.has(keySelector(i)));
+    } else if (sourceType === "arxiv_papers") {
+      const now = Date.now();
+      const fourteenDays = 14 * 24 * 3600 * 1000;
+      return items.filter((i) => {
+        const lastSeen = this.seenPapers.get(keySelector(i));
+        return !lastSeen || now - lastSeen > fourteenDays;
+      });
+    } else if (sourceType === "github_trending") {
+      return items.filter((i) => !this.seenRepos.has(keySelector(i)));
+    }
+    return items;
+  }
+
+  async saveArticles(articles: any[]): Promise<number> {
+    articles.forEach((a) => this.seenArticles.add(a.url));
+    this.persist();
+    return articles.length;
+  }
+
+  async savePapers(papers: any[]): Promise<number> {
+    const now = Date.now();
+    papers.forEach((p) => this.seenPapers.set(p.paperId, now));
+    this.persist();
+    return papers.length;
+  }
+
+  async saveRepos(repos: any[]): Promise<number> {
+    repos.forEach((r) => this.seenRepos.add(r.repoName));
+    this.persist();
+    return repos.length;
+  }
+
+  async checkIdempotency(taskName: string, dateStr: string): Promise<boolean> {
+    return this.dailyRuns.has(`${taskName}:${dateStr}`);
+  }
+
+  async recordDailyRun(
+    taskName: string,
+    dateStr: string,
+    status: string
+  ): Promise<void> {
+    if (status === "success") {
+      this.dailyRuns.add(`${taskName}:${dateStr}`);
+      this.persist();
+    }
+  }
+}
+
+// ==============================================================================
+// 4. 存储驱动工厂函数
 // ==============================================================================
 export function createDedupStore(appConfig: AppConfig): IDedupStore {
   if (appConfig.storage.driver === "postgres") {
     return new PostgresDedupStore(appConfig.storage.databaseUrl);
+  }
+  if (appConfig.storage.driver === "sqlite") {
+    return new FileDedupStore(appConfig.storage.sqlitePath);
   }
   return new MemoryDedupStore();
 }
