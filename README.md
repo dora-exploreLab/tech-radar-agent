@@ -132,6 +132,12 @@ pnpm dev status
 
 ---
 
+## 🤝 贡献与参与 (Contributing)
+
+欢迎提交 Issue 与 Pull Request！让我们共同打造最强的高信噪比技术雷达与智能体执行基座。
+
+---
+
 ## 📄 开源许可证
 
 本项目基于 [MIT License](LICENSE) 协议完全开源。
