@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 ```
    _______        _     ____           _             
@@ -22,6 +22,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg?logo=typescript)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-green.svg?logo=nodedotjs)](https://nodejs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Co-developed with AGY](https://img.shields.io/badge/Co--developed%20with-AGY%20Agent-8A2BE2?logo=robotframework&logoColor=white)](https://github.com/dora-exploreLab)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 </div>
@@ -174,6 +175,15 @@ OBSIDIAN_VAULT_PATH=/path/to/your/obsidian/vault
 ## 🤝 参与贡献 (Contributing)
 
 热烈欢迎提交 Issue 与 Pull Request！请查阅 [CONTRIBUTING.md](CONTRIBUTING.md) 了解开发规范与提交流程。
+
+---
+
+## 👥 核心作者与共建团队 (Authors & Contributors)
+
+* 🧑‍💻 **[dorabighead](https://github.com/dorabighead)** (Lead Architect & Maintainer)
+  - 架构总览、产品设计、领域模型决策与开源生态主理。
+* 🤖 **[AGY (Antigravity Agent)](https://github.com/dora-exploreLab)** (Autonomous AI Co-Developer)
+  - 核心执行脚手架（Harness 动作族）设计、网络与存储驱动全解耦重构、工业级类型安全与持续集成工程化落地。
 
 ---
 

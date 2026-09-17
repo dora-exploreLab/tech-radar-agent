@@ -39,6 +39,10 @@
     "typescript"
   ],
   "author": "dorabighead",
+  "contributors": [
+    "dorabighead <https://github.com/dorabighead>",
+    "AGY (Antigravity Agent) <https://github.com/dora-exploreLab>"
+  ],
   "license": "MIT",
   "dependencies": {
     "axios": "^1.20.0",
